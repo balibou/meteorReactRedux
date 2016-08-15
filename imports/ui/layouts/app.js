@@ -1,17 +1,16 @@
-import React from 'react';
-import { Grid } from 'react-bootstrap';
-import AppNavigation from '../containers/app-navigation';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../actionCreators';
+import Main from '../../ui/pages/Main';
 
-export const App = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element.isRequired,
-  },
-  render() {
-    return <div>
-      <AppNavigation />
-      <Grid>
-        { this.props.children }
-      </Grid>
-    </div>;
-  },
-});
+const mapStateToProps = ({ auth }) => {
+  return {
+    loggedIn: auth.loggedIn,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(actionCreators, dispatch);
+};
+
+export const App = connect(mapStateToProps, mapDispatchToProps)(Main);
